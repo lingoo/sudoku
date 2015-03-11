@@ -1,4 +1,5 @@
 import copy
+import random
 
 
 class Sudoku(object):
@@ -10,7 +11,16 @@ class Sudoku(object):
         self.level = 0
 
     def chuti(self):
-        print("出题部分")
+        print("开始出题")
+        self.temp = [[0 for i in range(9)] for j in range(9)]
+        l = [i for i in range(1, 10)]
+        random.shuffle(l)
+        for i in range(5):
+            self.temp[0][i] = l.pop()
+        for i in range(5, 9):
+            self.temp[8][i] = l.pop()
+        self.question = self.temp
+        self.jieti()
 
     def jieti(self):
         print("您输入的题目是：")
@@ -56,13 +66,13 @@ class Sudoku(object):
         line = cursor[1]  # 列名123
         value = self.temp[row][line]
         # 先检查行
-        for i in range(0, 9):
+        for i in range(9):
             if i == line:
                 continue
             if self.temp[row][i] == value:
                 return False
         # 再检查列
-        for i in range(0, 9):
+        for i in range(9):
             if i == row:
                 continue
             if self.temp[i][line] == value:
@@ -83,13 +93,13 @@ class Sudoku(object):
         pass
 
     def show(self):
-        for i in range(0, 9):
+        for i in range(9):
             string = ""
-            for j in range(0, 9):
+            for j in range(9):
                 string += ' ' + str(
                     self.answer[i][j])
                 if (j + 1) % 3 == 0:
                     string += " |"
             print(string)
             if (i + 1) % 3 == 0:
-                print("------------------------")
+                print("-" * 24)
